@@ -32,10 +32,9 @@ await AudioMixer.setVolumeAsync(playerId, 0.8);
 await AudioMixer.playAsync(playerId, true); // true = loop playback
 
 // Listen for when a track finishes
-const unsubscribe = addAudioMixerPlaybackEndedListener((playerId) => {
-  console.log("Track ended globally", playerId);
-  // Optionally trigger next track or custom logic
-});
+ const sub = AudioMixer.addListener("onPlaybackEnded", ({ playerId }) => {
+    callback(playerId);
+  });
 
 // Stop a specific track
 await AudioMixer.stopAsync(playerId);
